@@ -9,9 +9,17 @@ const path = require("path"); // Module có sẵn của Node.js để làm việ
 const app = express();
 const PORT = process.env.PORT || 5000; // Cổng cho server backend
 
+// Import routes
+const projectRoutes = require("./routes/projectRoutes");
+const authRoutes = require("./routes/authRoutes");
+
 // Middleware: Những đoạn code sẽ chạy trước khi request được xử lý
 app.use(cors()); // Kích hoạt CORS cho tất cả các request
 app.use(express.json()); // Cho phép server đọc dữ liệu JSON từ request body
+
+// Use routes
+app.use("/api/projects", projectRoutes); // Mọi request đến /api/projects sẽ được xử lý bởi projectRoutes
+app.use("/api/auth", authRoutes); // Mọi request đến /api/auth sẽ được xử lý bởi authRoutes
 
 // Kết nối MongoDB
 const connectDB = async () => {
